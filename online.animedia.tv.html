@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "red", "font": {"color": "white"}, "id": "online.animedia.tv", "label": "online.animedia.tv", "shape": "dot", "size": 17.0}, {"color": "red", "font": {"color": "white"}, "id": "amai.tv", "label": "amai.tv", "shape": "dot", "size": 19.339850002884624}, {"color": "red", "font": {"color": "white"}, "id": "liveinternet.ru", "label": "liveinternet.ru", "shape": "dot", "size": 26.83772647454919}, {"color": "white", "font": {"color": "white"}, "id": "static.animedia.pro", "label": "static.animedia.pro", "shape": "dot", "title": "static.animedia.pro"}, {"color": "white", "font": {"color": "white"}, "id": "vk.com", "label": "vk.com", "shape": "dot", "title": "vk.com"}, {"color": "white", "font": {"color": "white"}, "id": "static.amai.tv", "label": "static.amai.tv", "shape": "dot", "title": "static.amai.tv"}, {"color": "white", "font": {"color": "white"}, "id": "g.liveinternet.ru", "label": "g.liveinternet.ru", "shape": "dot", "title": "g.liveinternet.ru"}, {"color": "white", "font": {"color": "white"}, "id": "mediametrics.ru", "label": "mediametrics.ru", "shape": "dot", "title": "mediametrics.ru"}, {"color": "white", "font": {"color": "white"}, "id": "smart-lab.ru", "label": "smart-lab.ru", "shape": "dot", "title": "smart-lab.ru"}, {"color": "white", "font": {"color": "white"}, "id": "technohelp.ru", "label": "technohelp.ru", "shape": "dot", "title": "technohelp.ru"}, {"color": "white", "font": {"color": "white"}, "id": "03.ru", "label": "03.ru", "shape": "dot", "title": "03.ru"}, {"color": "white", "font": {"color": "white"}, "id": "3dnews.ru", "label": "3dnews.ru", "shape": "dot", "title": "3dnews.ru"}, {"color": "white", "font": {"color": "white"}, "id": "radio.mediametrics.ru", "label": "radio.mediametrics.ru", "shape": "dot", "title": "radio.mediametrics.ru"}, {"color": "white", "font": {"color": "white"}, "id": "doctor.ru", "label": "doctor.ru", "shape": "dot", "title": "doctor.ru"}, {"color": "white", "font": {"color": "white"}, "id": "chat.li.ru", "label": "chat.li.ru", "shape": "dot", "title": "chat.li.ru"}, {"color": "white", "font": {"color": "white"}, "id": "wiki.liveinternet.ru", "label": "wiki.liveinternet.ru", "shape": "dot", "title": "wiki.liveinternet.ru"}, {"color": "white", "font": {"color": "white"}, "id": "li.ru", "label": "li.ru", "shape": "dot", "title": "li.ru"}]);
+        edges = new vis.DataSet([{"from": "online.animedia.tv", "to": "static.animedia.pro"}, {"from": "online.animedia.tv", "to": "amai.tv"}, {"from": "amai.tv", "to": "vk.com"}, {"from": "amai.tv", "to": "static.amai.tv"}, {"from": "amai.tv", "to": "liveinternet.ru"}, {"from": "liveinternet.ru", "to": "g.liveinternet.ru"}, {"from": "liveinternet.ru", "to": "mediametrics.ru"}, {"from": "liveinternet.ru", "to": "smart-lab.ru"}, {"from": "liveinternet.ru", "to": "technohelp.ru"}, {"from": "liveinternet.ru", "to": "03.ru"}, {"from": "liveinternet.ru", "to": "3dnews.ru"}, {"from": "liveinternet.ru", "to": "radio.mediametrics.ru"}, {"from": "liveinternet.ru", "to": "doctor.ru"}, {"from": "liveinternet.ru", "to": "chat.li.ru"}, {"from": "liveinternet.ru", "to": "wiki.liveinternet.ru"}, {"from": "liveinternet.ru", "to": "li.ru"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"borderWidthSelected": 3, "font": {"color": "rgba(117,117,117,1)", "size": 24, "face": "arial", "strokeWidth": 1}, "size": 13}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

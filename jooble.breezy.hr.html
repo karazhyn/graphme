@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "red", "font": {"color": "white"}, "id": "jooble.breezy.hr", "label": "jooble.breezy.hr", "shape": "dot", "size": 23.339850002884624}, {"color": "red", "font": {"color": "white"}, "id": "instagram.com", "label": "instagram.com", "shape": "dot", "size": 17.0}, {"color": "red", "font": {"color": "white"}, "id": "hiring.jooble.org", "label": "hiring.jooble.org", "shape": "dot", "size": 19.339850002884624}, {"color": "red", "font": {"color": "white"}, "id": "youtube.com", "label": "youtube.com", "shape": "dot", "size": 19.339850002884624}, {"color": "red", "font": {"color": "white"}, "id": "breezy.hr", "label": "breezy.hr", "shape": "dot", "size": 26.83772647454919}, {"color": "white", "font": {"color": "white"}, "id": "linkedin.com", "label": "linkedin.com", "shape": "dot", "title": "linkedin.com"}, {"color": "white", "font": {"color": "white"}, "id": "breezy-gallery.imgix.net", "label": "breezy-gallery.imgix.net", "shape": "dot", "title": "breezy-gallery.imgix.net"}, {"color": "white", "font": {"color": "white"}, "id": "help.instagram.com", "label": "help.instagram.com", "shape": "dot", "title": "help.instagram.com"}, {"color": "white", "font": {"color": "white"}, "id": "about.instagram.com", "label": "about.instagram.com", "shape": "dot", "title": "about.instagram.com"}, {"color": "white", "font": {"color": "white"}, "id": "facebook.com", "label": "facebook.com", "shape": "dot", "title": "facebook.com"}, {"color": "white", "font": {"color": "white"}, "id": "tilda.cc", "label": "tilda.cc", "shape": "dot", "title": "tilda.cc"}, {"color": "white", "font": {"color": "white"}, "id": "accounts.google.com", "label": "accounts.google.com", "shape": "dot", "title": "accounts.google.com"}, {"color": "white", "font": {"color": "white"}, "id": "policies.google.com", "label": "policies.google.com", "shape": "dot", "title": "policies.google.com"}, {"color": "white", "font": {"color": "white"}, "id": "consent.youtube.com", "label": "consent.youtube.com", "shape": "dot", "title": "consent.youtube.com"}, {"color": "white", "font": {"color": "white"}, "id": "app.breezy.hr", "label": "app.breezy.hr", "shape": "dot", "title": "app.breezy.hr"}, {"color": "white", "font": {"color": "white"}, "id": "capterra.com", "label": "capterra.com", "shape": "dot", "title": "capterra.com"}, {"color": "white", "font": {"color": "white"}, "id": "twitter.com", "label": "twitter.com", "shape": "dot", "title": "twitter.com"}, {"color": "white", "font": {"color": "white"}, "id": "peoplefluent.com", "label": "peoplefluent.com", "shape": "dot", "title": "peoplefluent.com"}, {"color": "white", "font": {"color": "white"}, "id": "jobs.breezy.hr", "label": "jobs.breezy.hr", "shape": "dot", "title": "jobs.breezy.hr"}, {"color": "white", "font": {"color": "white"}, "id": "resources.breezy.hr", "label": "resources.breezy.hr", "shape": "dot", "title": "resources.breezy.hr"}, {"color": "white", "font": {"color": "white"}, "id": "developer.breezy.hr", "label": "developer.breezy.hr", "shape": "dot", "title": "developer.breezy.hr"}, {"color": "white", "font": {"color": "white"}, "id": "status.breezy.hr", "label": "status.breezy.hr", "shape": "dot", "title": "status.breezy.hr"}]);
+        edges = new vis.DataSet([{"from": "jooble.breezy.hr", "to": "hiring.jooble.org"}, {"from": "jooble.breezy.hr", "to": "instagram.com"}, {"from": "jooble.breezy.hr", "to": "linkedin.com"}, {"from": "jooble.breezy.hr", "to": "breezy-gallery.imgix.net"}, {"from": "jooble.breezy.hr", "to": "youtube.com"}, {"from": "jooble.breezy.hr", "to": "breezy.hr"}, {"from": "instagram.com", "to": "help.instagram.com"}, {"from": "instagram.com", "to": "about.instagram.com"}, {"from": "hiring.jooble.org", "to": "facebook.com"}, {"from": "hiring.jooble.org", "to": "tilda.cc"}, {"from": "youtube.com", "to": "accounts.google.com"}, {"from": "youtube.com", "to": "policies.google.com"}, {"from": "youtube.com", "to": "consent.youtube.com"}, {"from": "breezy.hr", "to": "app.breezy.hr"}, {"from": "breezy.hr", "to": "capterra.com"}, {"from": "breezy.hr", "to": "twitter.com"}, {"from": "breezy.hr", "to": "linkedin.com"}, {"from": "breezy.hr", "to": "facebook.com"}, {"from": "breezy.hr", "to": "instagram.com"}, {"from": "breezy.hr", "to": "peoplefluent.com"}, {"from": "breezy.hr", "to": "jobs.breezy.hr"}, {"from": "breezy.hr", "to": "resources.breezy.hr"}, {"from": "breezy.hr", "to": "developer.breezy.hr"}, {"from": "breezy.hr", "to": "status.breezy.hr"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"borderWidthSelected": 3, "font": {"color": "rgba(117,117,117,1)", "size": 24, "face": "arial", "strokeWidth": 1}, "size": 13}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
