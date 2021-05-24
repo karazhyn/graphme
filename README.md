@@ -11,3 +11,12 @@
 * Option to visualize full link\domain only
 * Option to choose depth of crawling and number of threads to crawling
 * Save and load graph
+
+## Install and run
+```
+git clone https://github.com/karazhyn/graphme
+cd graphme
+pip install -r requirements.txt
+python3 main.py
+streamlit run main.py
+```
