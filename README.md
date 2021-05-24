@@ -13,10 +13,10 @@
 * Save and load graph
 
 ## Install and run
-'''
+```
 git clone https://github.com/karazhyn/graphme
 cd graphme
 pip install -r requirements.txt
 python3 main.py
 streamlit run main.py
-'''
+```
