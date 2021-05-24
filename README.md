@@ -2,8 +2,8 @@
 ### Crawl and visualize all connections between site references with certain depth of crawling.
 
 ## Appearance
-![screenshot1](screesnshots/demo1.png)
-![screenshot2](screesnshots/demo2.png)
+![screenshot1](screenshots/demo1.png)
+![screenshot2](screenshots/demo2.png)
 
 ## Features
 * Crawl all links in site with certain depth of recursion
