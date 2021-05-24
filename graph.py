@@ -55,8 +55,8 @@ def make_graph(initial_link, all_links, external_links, option):
             }
             ''')
 
-            got_net.save_graph(urlparse(initial_link).netloc+'.html')
-            got_net.save_graph('graphme.html')
+            got_net.save_graph('graphs/'+urlparse(initial_link).netloc+'.html')
+            got_net.save_graph('graphs/graphme.html')
             return True #return that everything is ok
                     
         else: #if list is empty
@@ -102,12 +102,12 @@ def make_graph(initial_link, all_links, external_links, option):
             ''')
 
 
-            got_net.save_graph(urlparse(initial_link).netloc+'.html')
-            got_net.save_graph('graphme.html')
+            got_net.save_graph('graphs/'+urlparse(initial_link).netloc+'.html')
+            got_net.save_graph('graphs/graphme.html')
             return True #return that everything is ok
 
         else: #if list is empty
-            main.st.warning('Site has atni-parsing system. Choose another one.')
+            main.st.warning('Site has anti-parsing system. Choose another one.')
             return False
 
 

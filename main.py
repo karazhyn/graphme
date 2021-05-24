@@ -12,7 +12,7 @@ import links_crawler.main_crawler
 st.set_page_config(
      page_title="GraphMe",
      layout="wide",
-     initial_sidebar_state="expanded",
+     initial_sidebar_state="expanded"
 )
   
 
@@ -49,18 +49,18 @@ if(st.sidebar.button('Graph it!')):
     done = graph.make_graph(initial_link, all_links, external_links, option)
     
     if done:
-        HtmlFile = open("graphme.html", 'r', encoding='utf-8')
+        HtmlFile = open("graphs/graphme.html", 'r', encoding='utf-8')
         source_code = HtmlFile.read() 
         components.html(source_code, height = 800,width=1300)
 
 st.sidebar.title('Select saved graph')
 
-files = os.listdir()
+files = os.listdir('graphs/')
 files = [x for x in files if re.search("^.*html$", x)]
 saved_graphs = st.sidebar.selectbox('Show saved graphs',files)
 
 if(st.sidebar.button('Show it!')):
 
-    HtmlFile = open(saved_graphs.title().lower(), 'r', encoding='utf-8')
+    HtmlFile = open('graphs/'+saved_graphs.title().lower(), 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     components.html(source_code, height = 800,width=1300)
