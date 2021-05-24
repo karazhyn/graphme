@@ -9,13 +9,14 @@ import links_crawler.main_crawler
 # import logging
 # from LinksCrawler.config import *
 # from LinksCrawler.crawler import Crawler
-st.set_page_config(
-     page_title="GraphMe",
-     page_icon=None,
-     layout="wide",
-     initial_sidebar_state="expanded",
-)
-  
+try:
+    st.set_page_config(
+        page_title="GraphMe",
+        page_icon=None,
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+except: pass
 
 # Title
 st.title("GraphMe")
