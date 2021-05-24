@@ -1,4 +1,9 @@
+#You can try install these packages if there is any problems
+#cython==0.29.23
+#setuptools==56.0.0
+#wheel==0.36.1
 matplotlib==3.3.1
 networkx==2.5.1
 streamlit==0.82.0
 pyvis==0.1.9
+
