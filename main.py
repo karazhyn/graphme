@@ -11,8 +11,9 @@ import links_crawler.main_crawler
 # from LinksCrawler.crawler import Crawler
 st.set_page_config(
      page_title="GraphMe",
+     page_icon=None,
      layout="wide",
-     initial_sidebar_state="expanded"
+     initial_sidebar_state="expanded",
 )
   
 
