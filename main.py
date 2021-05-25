@@ -9,31 +9,26 @@ import links_crawler.main_crawler
 # import logging
 # from LinksCrawler.config import *
 # from LinksCrawler.crawler import Crawler
-try:
-    st.set_page_config(
-        page_title="GraphMe",
-        page_icon=None,
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
-except: 
-    pass
+# try:
+st.set_page_config(
+    page_title="GraphMe",
+    page_icon=None,
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+# except: 
+#     pass
 
 # Title
 st.title("GraphMe")
 st.markdown("## Visualize all connections between site references")
-
-
+# Sidebar
 st.sidebar.title('Select graph options')
 link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us", key='input1')
 depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2", key='input2')
 thread_input =  st.sidebar.text_input("Enter number of threads to crawling:", "20", key='input3')
-
 option=st.sidebar.selectbox('Select type',('Full links','Domains only'), key='box')
-
 # style=st.sidebar.checkbox('Add style interactivity') #feature does not work right now
-
-
 
 
 # display the name when the submit button is clicked
