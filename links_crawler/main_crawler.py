@@ -31,6 +31,6 @@ def main_crawler(initial_link, initial_thread=2, initial_depth=1):
 
     return crawler.all_links, crawler.external_links
 
-#debug block
+#crawler debug block
 # if __name__ == '__main__':
 #     main_crawler('https://support.unity3d.com/hc/en-us', 20)
