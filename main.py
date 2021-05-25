@@ -25,9 +25,9 @@ st.markdown("## Visualize all connections between site references")
 
 
 st.sidebar.title('Select graph options')
-link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us")
-depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2")
-thread_input =  st.sidebar.text_input("Enter number of threads to crawling:", "20")
+link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us", key='1')
+depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2", key='2')
+thread_input =  st.sidebar.text_input("Enter number of threads to crawling:", "20", key='3')
 
 option=st.sidebar.selectbox('Select type',('Full links','Domains only'))
 
