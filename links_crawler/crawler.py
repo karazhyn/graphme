@@ -124,14 +124,16 @@ class Crawler:
         parses the response and iterates over the links in the page, inserts the relevant ones as URLD to the queue
         """
         soup = BeautifulSoup(request_response.text, 'lxml')
-        print(f'---------------------URL: {url}')
-        for link in soup.find_all('a'):
+        print(f'+URL: {url}')
+        for link in soup.find_all('a'): #find all links 
             href = link.get('href')
-            if href and href.startswith('http'):
+            if href and href.startswith('http'): 
                 if href.startswith('/'):
                     href = url + href
                 if href not in self.scraped_pages:
-                    print(f'------------HREF: {href}')
+                    print(f'-HREF: {href}')
+                    
+                    #save all links
                     if url not in self.all_links.keys():
                         self.all_links[url] = [href]
                     else:
@@ -139,12 +141,12 @@ class Crawler:
 
                     original_domain = urlparse(url).netloc
                     domain = urlparse(href).netloc
-                    if original_domain.split('.')[0] == 'www':
-                        original_domain = original_domain[4:]
-                    if domain.split('.')[0] == 'www':
-                        domain = domain[4:]
+                    if original_domain.split('.')[0] == 'www': #handling case where 'www.google.com' and 'google.com' are different sites
+                        original_domain = original_domain[4:]  #
+                    if domain.split('.')[0] == 'www':          #
+                        domain = domain[4:]                    #
 
-
+                    #save all domain of links
                     if domain != '' and domain != original_domain:
                         if original_domain not in self.external_links.keys():
                             self.external_links[original_domain] = [domain]

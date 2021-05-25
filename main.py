@@ -20,27 +20,25 @@ except:
     pass
 
 # Title
-st.title("GraphMe")
-st.markdown("## Visualize all connections between site references")
+st.title("GraphMe", key='mainTitle')
+st.markdown("## Visualize all connections between site references", key='markdown1')
 
 
-st.sidebar.title('Select graph options')
-link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us", key='1')
-depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2", key='2')
-thread_input =  st.sidebar.text_input("Enter number of threads to crawling:", "20", key='3')
+st.sidebar.title('Select graph options', key='sideTitle')
+link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us", key='input1')
+depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2", key='input2')
+thread_input =  st.sidebar.text_input("Enter number of threads to crawling:", "20", key='input3')
 
-option=st.sidebar.selectbox('Select type',('Full links','Domains only'))
+option=st.sidebar.selectbox('Select type',('Full links','Domains only'), key='box')
 
-# style=st.sidebar.checkbox('Add style interactivity') #feature does not work rn
+# style=st.sidebar.checkbox('Add style interactivity') #feature does not work right now
 
 
 
 
 # display the name when the submit button is clicked
 # .title() is used to get the input text string 
-if(st.sidebar.button('Graph it!')):
-    # link = link_input.title()
-    # st.success(result)
+if(st.sidebar.button('Graph it!', key='button1')):
     if re.match('^http.*', link_input.title().lower()):
         initial_link = link_input.title().lower()
     else:
@@ -62,7 +60,7 @@ files = os.listdir('graphs/')
 files = [x for x in files if re.search("^.*html$", x)]
 saved_graphs = st.sidebar.selectbox('Show saved graphs',files)
 
-if(st.sidebar.button('Show it!')):
+if(st.sidebar.button('Show it!', key='button2')):
 
     HtmlFile = open('graphs/'+saved_graphs.title().lower(), 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
