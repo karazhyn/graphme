@@ -20,11 +20,11 @@ except:
     pass
 
 # Title
-st.title("GraphMe", key='mainTitle')
-st.markdown("## Visualize all connections between site references", key='markdown1')
+st.title("GraphMe")
+st.markdown("## Visualize all connections between site references")
 
 
-st.sidebar.title('Select graph options', key='sideTitle')
+st.sidebar.title('Select graph options')
 link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us", key='input1')
 depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2", key='input2')
 thread_input =  st.sidebar.text_input("Enter number of threads to crawling:", "20", key='input3')
