@@ -6,6 +6,10 @@ import streamlit as st
 import streamlit.components.v1 as components
 import graph
 import links_crawler.main_crawler
+import psycopg2
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 # import logging
 # from LinksCrawler.config import *
 # from LinksCrawler.crawler import Crawler
@@ -63,4 +67,35 @@ def main():
         components.html(source_code, height = 800,width=1300)
 
 if __name__ == '__main__':
+    # connection = psycopg2.connect(user="postgres",
+    #                             password='nimikita',
+    #                             host="127.0.0.1",
+    #                             port="5432",
+    #                             database="graphme")
+
+    # # Create a cursor to perform database operations
+    # cursor = connection.cursor()
+    # # Print PostgreSQL details
+    # print("PostgreSQL server information")
+    # print(connection.get_dsn_parameters(), "\n")
+    # # Executing a SQL query
+    # cursor.execute("SELECT version();")
+
+
+
+    engine = create_engine('postgresql://postgres:nimikita@localhost/') #connect to psql without specific DB
+    #create DB graphme if not exists:
+    result = engine.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'graphme'") 
+    exists = result.fetchone()
+    if not exists:
+        session = sessionmaker(bind=engine)() #change isolation level is necessarily to create new DB
+        session.connection().connection.set_isolation_level(0)
+        session.execute('CREATE DATABASE graphme')
+        session.connection().connection.set_isolation_level(1)
+    engine.dispose()
+    engine = create_engine('postgresql://postgres:nimikita@localhost/graphme') #connect to psql without specific DB
+
+    # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
+    engine.execute("CREATE TABLE IF NOT EXISTS graphs (graph text)")
+
     main()
