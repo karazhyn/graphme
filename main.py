@@ -57,8 +57,20 @@ def main():
 
     st.sidebar.title('Select saved graph')
 
-    files = os.listdir('graphs/')
-    files = [x for x in files if re.search("^.*html$", x)]
+    files = []
+    path = os.path.abspath(os.getcwd())
+    listdir = os.listdir('graphs/')
+    for file in listdir:
+        if re.match("^.*html$", file):
+            files.append(file)
+            engine.execute("CREATE TABLE IF NOT EXISTS text_data (text varchar)")
+            engine.execute("COPY text_data FROM '%s/graphs/lol.txt '"%(path))
+            # engine.execute("INSERT INTO graphs (graph) SELECT string_agg(text, chr(10)) FROM text_data")
+            engine.execute("DROP TABLE text_data")
+
+        # engine.
+
+    # files = [x for x in files if re.search("^.*html$", x)]
     saved_graphs = st.sidebar.selectbox('Show saved graphs',files)
 
     if(st.sidebar.button('Show it!', key='button2')):
@@ -93,7 +105,7 @@ if __name__ == '__main__':
         session.execute('CREATE DATABASE graphme')
         session.connection().connection.set_isolation_level(1)
     engine.dispose()
-    engine = create_engine('postgresql://postgres:nimikita@localhost/graphme') #connect to psql without specific DB
+    engine = create_engine('postgresql://postgres:nimikita@localhost/graphme') #connect to created/existing graphme DB
 
     # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
     engine.execute("CREATE TABLE IF NOT EXISTS graphs (graph text)")
