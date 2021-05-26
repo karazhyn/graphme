@@ -1,5 +1,6 @@
 # GraphMe
 ### Crawl and visualize all connections between site references with certain depth of crawling.
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/karazhyn/graphme/main.py)  <sup>Live version doesn't work for crawling new websites because host ip are mostly banned.</sup>
 
 ## Appearance
 ![screenshot1](screenshots/demo1.png)
@@ -20,3 +21,4 @@ pip install -r requirements.txt
 python3 main.py
 streamlit run main.py
 ```
+ <sub>You can also use live version by this link [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/karazhyn/graphme/main.py) but it does not work for crawling new websites because host proxies are banned. Thus if you need full functionality it is better to run local application.</sup>
