@@ -7,8 +7,8 @@ import streamlit.components.v1 as components
 import graph
 import links_crawler.main_crawler
 # import psycopg2
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
 
 # import logging
 # from LinksCrawler.config import *
