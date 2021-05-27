@@ -26,7 +26,7 @@ def make_graph(initial_link, all_links, external_links, option):
                 keys.append(key)
                 length.append(len(all_links[key]))
             for src, size in zip(keys, length):
-                got_net.add_node(src,src, size=13+math.log2(int(size)**5), title=src, color = 'red')
+                got_net.add_node(src,src, size=13+math.log2(int(size)**6), title=src, color = 'red')
 
 
             for src, edges in all_links.items(): #make other nodes
