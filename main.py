@@ -6,7 +6,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import graph
 import links_crawler.main_crawler
-import psycopg2
+# import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -63,8 +63,8 @@ def main():
     for file in listdir:
         if re.match("^.*html$", file):
             files.append(file)
-            engine.execute("CREATE TABLE IF NOT EXISTS text_data (text varchar)")
-            engine.execute("COPY text_data FROM '%s/graphs/lol.txt'"%(path))
+            # engine.execute("CREATE TABLE IF NOT EXISTS text_data (text varchar)")
+            # engine.execute("COPY text_data FROM '%s/graphs/lol.txt'"%(path)) #----------SOMEWHY DOES NOT SAVING TEXT TO DATABASE-------
             # engine.execute("INSERT INTO graphs (text) SELECT string_agg(text, chr(10)) FROM text_data")
             # engine.execute("DROP TABLE text_data")
 
@@ -95,19 +95,19 @@ if __name__ == '__main__':
 
 
 
-    engine = create_engine('postgresql://postgres:nimikita@localhost/') #connect to psql without specific DB
-    #create DB graphme if not exists:
-    result = engine.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'graphme'") 
-    exists = result.fetchone()
-    if not exists:
-        session = sessionmaker(bind=engine)() #change isolation level is necessarily to create new DB
-        session.connection().connection.set_isolation_level(0)
-        session.execute('CREATE DATABASE graphme')
-        session.connection().connection.set_isolation_level(1)
-    engine.dispose()
-    engine = create_engine('postgresql://postgres:nimikita@localhost/graphme') #connect to created/existing graphme DB
+    # engine = create_engine('postgresql://postgres:nimikita@localhost/') #connect to psql without specific DB
+    # #create DB graphme if not exists:
+    # result = engine.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'graphme'") 
+    # exists = result.fetchone()
+    # if not exists:
+    #     session = sessionmaker(bind=engine)() #change isolation level is necessarily to create new DB
+    #     session.connection().connection.set_isolation_level(0)
+    #     session.execute('CREATE DATABASE graphme')
+    #     session.connection().connection.set_isolation_level(1)
+    # engine.dispose()
+    # engine = create_engine('postgresql://postgres:nimikita@localhost/graphme') #connect to created/existing graphme DB
 
-    # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
-    engine.execute("CREATE TABLE IF NOT EXISTS graphs (graph text)")
+    # # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
+    # engine.execute("CREATE TABLE IF NOT EXISTS graphs (graph text)")
 
     main()
