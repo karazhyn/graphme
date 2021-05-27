@@ -64,9 +64,9 @@ def main():
         if re.match("^.*html$", file):
             files.append(file)
             engine.execute("CREATE TABLE IF NOT EXISTS text_data (text varchar)")
-            engine.execute("COPY text_data FROM '%s/graphs/lol.txt '"%(path))
-            # engine.execute("INSERT INTO graphs (graph) SELECT string_agg(text, chr(10)) FROM text_data")
-            engine.execute("DROP TABLE text_data")
+            engine.execute("COPY text_data FROM '%s/graphs/lol.txt'"%(path))
+            # engine.execute("INSERT INTO graphs (text) SELECT string_agg(text, chr(10)) FROM text_data")
+            # engine.execute("DROP TABLE text_data")
 
         # engine.
 
