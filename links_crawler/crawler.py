@@ -1,12 +1,11 @@
 import logging
-from queue import Queue, Empty
 import requests
 import threading
 import concurrent.futures
+from queue import Queue, Empty
 from bs4 import BeautifulSoup
 from typing import Tuple, Dict, Set
 from urllib.parse import urlparse
-
 import links_crawler.config
 from links_crawler.config import BAD_DOMAINS
 
@@ -137,7 +136,6 @@ class Crawler:
                     print(f'-HREF: {href}')
                     
                     self.save_url(url, href) 
-
                     self.q.put(URLD.get_url_d(href, url_depth + 1))
     
 

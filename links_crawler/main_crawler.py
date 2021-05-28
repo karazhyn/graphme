@@ -1,7 +1,7 @@
 import logging
+import argparse
 import links_crawler.config 
 from links_crawler.crawler import Crawler
-import argparse
 
 
 def main_crawler(initial_link, initial_thread=2, initial_depth=1):

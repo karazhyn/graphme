@@ -4,17 +4,11 @@ from urllib.parse import urlparse
 # sys.path.append(".")
 import streamlit as st
 import streamlit.components.v1 as components
-import graph
-import links_crawler.main_crawler
-
-from links_crawler.config import BAD_DOMAINS #domains to exclude from graph
-# import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-# import logging
-# from LinksCrawler.config import *
-# from LinksCrawler.crawler import Crawler
+import graph
+import links_crawler.main_crawler
+from links_crawler.config import BAD_DOMAINS #domains to exclude from graph
 
 
 def main():
@@ -25,11 +19,8 @@ def main():
         initial_sidebar_state="expanded"
     )
 
-
-    # Title
     st.title("GraphMe")
     st.markdown("## Visualize all connections between site references")
-    # Sidebar
     st.sidebar.title('Select graph options')
     link_input = st.sidebar.text_input("Enter link of the site to vizualize:", "https://support.unity3d.com/hc/en-us", key='input1')
     depth_input =  st.sidebar.text_input("Enter depth of crawling:", "2", key='input2')
@@ -37,20 +28,15 @@ def main():
     option=st.sidebar.selectbox('Select type',('Full links','Domains only'), key='box')
     # style=st.sidebar.checkbox('Add style interactivity') #feature does not work right now
 
-
-    # display the name when the submit button is clicked
-    # .title() is used to get the input text string 
-    if(st.sidebar.button('Graph it!', key='button1')):
-        if re.match('^http.*', link_input.title().lower()):
+    if(st.sidebar.button('Graph it!', key='button1')): #button to start crwaling and visualizing
+        if re.match('^http.*', link_input.title().lower()): # .title() is used to get the input text string 
             initial_link = link_input.title().lower()
         else:
             initial_link = 'http://'+link_input.title().lower()
 
         all_links, all_domains = links_crawler.main_crawler.main_crawler(initial_link, int(thread_input.title()), int(depth_input.title())) #returns 2 dicts
-        
-        print(all_domains)
         done = graph.make_graph(initial_link, all_links, all_domains, option)
-        
+
         if done: #if make_graph() was sucessfully done
             HtmlFile = open("graphs/graphme.html", 'r', encoding='utf-8')
             source_code = HtmlFile.read() 
@@ -64,17 +50,19 @@ def main():
     for file in listdir:
         if re.match("^.*html$", file):
             files.append(file)
-            # engine.execute("CREATE TABLE IF NOT EXISTS text_data (text varchar)")
-            # engine.execute("COPY text_data FROM '%s/graphs/lol.txt'"%(path)) #somewhy does not saving text to DB
-            # engine.execute("INSERT INTO graphs (text) SELECT string_agg(text, chr(10)) FROM text_data")
-            # engine.execute("DROP TABLE text_data")
-
 
     saved_graphs = st.sidebar.selectbox('Show saved graphs',files)
-    if(st.sidebar.button('Show it!', key='button2')):
+    if(st.sidebar.button('Show it!', key='button2')): #button to show selected saved graph
         HtmlFile = open('graphs/'+saved_graphs.title().lower(), 'r', encoding='utf-8')
         source_code = HtmlFile.read() 
         components.html(source_code, height = 800,width=1300)
+
+    make_default_graph()
+
+def make_default_graph(): 
+    HtmlFile = open('graphs/google.com.html', 'r', encoding='utf-8') 
+    source_code = HtmlFile.read() 
+    components.html(source_code, height = 800,width=1300)
 
 def create_database():
     engine = create_engine(f'postgresql://{username}:{password}@localhost/') #connect to psql without specific DB
@@ -98,23 +86,7 @@ def create_database():
 
 
 if __name__ == '__main__':
-    # connection = psycopg2.connect(user="postgres",
-    #                             password='nimikita',
-    #                             host="127.0.0.1",
-    #                             port="5432",
-    #                             database="graphme")
-
-    # # Create a cursor to perform database operations
-    # cursor = connection.cursor()
-    # # Print PostgreSQL details
-    # print("PostgreSQL server information")
-    # print(connection.get_dsn_parameters(), "\n")
-    # # Executing a SQL query
-    # cursor.execute("SELECT version();")
-
-
-
-    # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
-    # engine.execute("CREATE TABLE IF NOT EXISTS graphs (graph text)")
-    create_database()
+    username = "" #specify your postgres database username and pass
+    password = ""
+    # create_database() #uncomment this when username and pass are specified
     main()
