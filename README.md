@@ -11,6 +11,7 @@
 * Visualize these links with interactive network graph
 * Option to visualize full link\domain only
 * Option to choose depth of crawling and number of threads to crawling
+* Database with links to exclude from graph 
 * Save and load graph
 
 ## Install and run
