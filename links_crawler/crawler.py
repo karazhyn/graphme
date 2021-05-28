@@ -8,6 +8,7 @@ from typing import Tuple, Dict, Set
 from urllib.parse import urlparse
 
 import links_crawler.config
+from links_crawler.config import BAD_DOMAINS
 
 LOGGER = logging.getLogger('Crawler')
 
@@ -42,7 +43,7 @@ class Crawler:
         self._dict_lock = threading.Lock()
 
         self.all_links = {}
-        self.external_links = {}
+        self.all_domains = {}
 
     def initialize_crawler(self) -> None:
         """
@@ -119,6 +120,8 @@ class Crawler:
                 self.url_dict[url] = url_depth
                 self.logger.info(f"{url} was added to the dict with value {url_depth}")
 
+
+    
     def insert_sub_url_to_q(self, request_response: requests.models.Response, url: str, url_depth: int) -> None:
         """
         parses the response and iterates over the links in the page, inserts the relevant ones as URLD to the queue
@@ -133,24 +136,29 @@ class Crawler:
                 if href not in self.scraped_pages:
                     print(f'-HREF: {href}')
                     
-                    #save all links
-                    if url not in self.all_links.keys():
-                        self.all_links[url] = [href]
-                    else:
-                        self.all_links[url].append(href)
-
-                    original_domain = urlparse(url).netloc
-                    domain = urlparse(href).netloc
-                    if original_domain.split('.')[0] == 'www': #handling case where 'www.google.com' and 'google.com' are different sites
-                        original_domain = original_domain[4:]  #
-                    if domain.split('.')[0] == 'www':          #
-                        domain = domain[4:]                    #
-
-                    #save all domain of links
-                    if domain != '' and domain != original_domain:
-                        if original_domain not in self.external_links.keys():
-                            self.external_links[original_domain] = [domain]
-                        elif domain not in self.external_links[original_domain]:
-                            self.external_links[original_domain].append(domain)
+                    self.save_url(url, href) 
 
                     self.q.put(URLD.get_url_d(href, url_depth + 1))
+    
+
+    def save_url(self, url, href): #save url to dictionary
+        #save all links
+        if url not in BAD_DOMAINS and href not in BAD_DOMAINS:
+            if url not in self.all_links.keys():
+                self.all_links[url] = [href]
+            else:
+                self.all_links[url].append(href)
+
+            original_domain = urlparse(url).netloc
+            domain = urlparse(href).netloc
+            if original_domain.split('.')[0] == 'www': #handling case where 'www.google.com' and 'google.com' are different links
+                original_domain = original_domain[4:]  #
+            if domain.split('.')[0] == 'www':          #
+                domain = domain[4:]                    #
+
+            #save domain of all links
+            if domain != '' and domain != original_domain:
+                if original_domain not in self.all_domains.keys():
+                    self.all_domains[original_domain] = [domain]
+                elif domain not in self.all_domains[original_domain]:
+                    self.all_domains[original_domain].append(domain)

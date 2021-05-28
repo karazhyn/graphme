@@ -1,14 +1,14 @@
 import pandas as pd
 import sys, os
 from urllib.parse import urlparse
-sys.path.append("..")
+# sys.path.append("..")
 from pyvis.network import Network
 from links_crawler.main_crawler import main_crawler
 import math
 import main
-# import main
 
-def make_graph(initial_link, all_links, external_links, option):
+
+def make_graph(initial_link, all_links, all_domains, option):
     got_net = Network(height='750px', width='100%', bgcolor='#222222', font_color='white')
 
     # set the physics layout of the network
@@ -66,20 +66,20 @@ def make_graph(initial_link, all_links, external_links, option):
     elif option == 'Domains only':
 
 
-        if external_links: #if not empty
+        if all_domains: #if not empty
             # initial_link = urlparse(initial_link).netloc
             # got_net.add_node(initial_link, initial_link, size = 25, color='red')
 
             keys = []
             length = []
-            for key in external_links.keys(): #make main red nodes
+            for key in all_domains.keys(): #make main red nodes
                 keys.append(key)
-                length.append(len(external_links[key]))
+                length.append(len(all_domains[key]))
             for src, size in zip(keys, length):
                 got_net.add_node(src,src, size=13+math.log2(int(size)**5), title=src, color='red')
 
 
-            for src, edges in external_links.items(): #make other nodes
+            for src, edges in all_domains.items(): #make other nodes
                 got_net.add_node(src, src, size=len(edges)*5, title=src, color='green')
                 for dst in edges:
                     got_net.add_node(dst, dst, title=dst, color='white')

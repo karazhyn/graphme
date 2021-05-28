@@ -25,11 +25,11 @@ def main_crawler(initial_link, initial_thread=2, initial_depth=1):
         print(link)
     print('ALL DICT:')
     print(crawler.all_links)
-    print('\n\nALL EXTERNAL DICTS: ')
-    print(crawler.external_links)
+    print('\n\nALL DOMAINS (EXTERNAL DICTS): ')
+    print(crawler.all_domains)
 
 
-    return crawler.all_links, crawler.external_links
+    return crawler.all_links, crawler.all_domains
 
 #crawler debug block
 # if __name__ == '__main__':

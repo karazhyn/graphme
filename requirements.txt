@@ -7,3 +7,4 @@ networkx==2.5.1
 streamlit==0.82.0
 pyvis==0.1.9
 beautifulsoup4==4.9.3
+SQLAlchemy==1.4.15

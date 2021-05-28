@@ -6,16 +6,17 @@ import streamlit as st
 import streamlit.components.v1 as components
 import graph
 import links_crawler.main_crawler
+
+from links_crawler.config import BAD_DOMAINS #domains to exclude from graph
 # import psycopg2
-# from sqlalchemy import create_engine
-# from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 # import logging
 # from LinksCrawler.config import *
 # from LinksCrawler.crawler import Crawler
 
 
-#try\except block made for handling st.set_page_config() bug
 def main():
     st.set_page_config(
         page_title="GraphMe",
@@ -45,10 +46,10 @@ def main():
         else:
             initial_link = 'http://'+link_input.title().lower()
 
-        all_links, external_links = links_crawler.main_crawler.main_crawler(initial_link, int(thread_input.title()), int(depth_input.title())) #returns 2 dicts
+        all_links, all_domains = links_crawler.main_crawler.main_crawler(initial_link, int(thread_input.title()), int(depth_input.title())) #returns 2 dicts
         
-        print(external_links)
-        done = graph.make_graph(initial_link, all_links, external_links, option)
+        print(all_domains)
+        done = graph.make_graph(initial_link, all_links, all_domains, option)
         
         if done: #if make_graph() was sucessfully done
             HtmlFile = open("graphs/graphme.html", 'r', encoding='utf-8')
@@ -64,19 +65,37 @@ def main():
         if re.match("^.*html$", file):
             files.append(file)
             # engine.execute("CREATE TABLE IF NOT EXISTS text_data (text varchar)")
-            # engine.execute("COPY text_data FROM '%s/graphs/lol.txt'"%(path)) #----------SOMEWHY DOES NOT SAVING TEXT TO DATABASE-------
+            # engine.execute("COPY text_data FROM '%s/graphs/lol.txt'"%(path)) #somewhy does not saving text to DB
             # engine.execute("INSERT INTO graphs (text) SELECT string_agg(text, chr(10)) FROM text_data")
             # engine.execute("DROP TABLE text_data")
 
-        # engine.
 
-    # files = [x for x in files if re.search("^.*html$", x)]
     saved_graphs = st.sidebar.selectbox('Show saved graphs',files)
-
     if(st.sidebar.button('Show it!', key='button2')):
         HtmlFile = open('graphs/'+saved_graphs.title().lower(), 'r', encoding='utf-8')
         source_code = HtmlFile.read() 
         components.html(source_code, height = 800,width=1300)
+
+def create_database():
+    engine = create_engine(f'postgresql://{username}:{password}@localhost/') #connect to psql without specific DB
+    #create DB graphme if not exists:
+    result = engine.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'graphme'") 
+    exists = result.fetchone() 
+    if not exists:
+        session = sessionmaker(bind=engine)() #change isolation level is necessarily to create new DB
+        session.connection().connection.set_isolation_level(0)
+        session.execute('CREATE DATABASE graphme')
+        session.connection().connection.set_isolation_level(1)
+    engine.dispose()
+    engine = create_engine(f'postgresql://{username}:{password}@localhost/graphme') #connect to created/existing graphme DB
+
+    engine.execute("CREATE TABLE IF NOT EXISTS bad_domains (url text)") # create table of bad domains (domains to exclude from graph)
+    engine.execute("TRUNCATE TABLE bad_domains") # clear table from old bad domains
+    engine.execute("ALTER TABLE bad_domains ADD UNIQUE (url)") #make url column unique values only
+    for domain in BAD_DOMAINS:
+        engine.execute("INSERT INTO bad_domains (url) VALUES ('%s') ON CONFLICT (url) DO NOTHING"%domain) #add bad domains to this table
+
+
 
 if __name__ == '__main__':
     # connection = psycopg2.connect(user="postgres",
@@ -95,19 +114,7 @@ if __name__ == '__main__':
 
 
 
-    # engine = create_engine('postgresql://postgres:nimikita@localhost/') #connect to psql without specific DB
-    # #create DB graphme if not exists:
-    # result = engine.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'graphme'") 
-    # exists = result.fetchone()
-    # if not exists:
-    #     session = sessionmaker(bind=engine)() #change isolation level is necessarily to create new DB
-    #     session.connection().connection.set_isolation_level(0)
-    #     session.execute('CREATE DATABASE graphme')
-    #     session.connection().connection.set_isolation_level(1)
-    # engine.dispose()
-    # engine = create_engine('postgresql://postgres:nimikita@localhost/graphme') #connect to created/existing graphme DB
-
-    # # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
+    # engine.execute("SELECT 'CREATE DATABASE graphme' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'graphme')\gexec")
     # engine.execute("CREATE TABLE IF NOT EXISTS graphs (graph text)")
-
+    create_database()
     main()
