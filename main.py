@@ -84,7 +84,6 @@ def create_database():
         engine.execute("INSERT INTO bad_domains (url) VALUES ('%s') ON CONFLICT (url) DO NOTHING"%domain) #add bad domains to this table
 
 
-
 if __name__ == '__main__':
     username = "" #specify your postgres database username and pass
     password = ""
