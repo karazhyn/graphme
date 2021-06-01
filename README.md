@@ -1,6 +1,6 @@
 # GraphMe
 ### Crawl and visualize all connections between site references with certain depth of crawling.
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/karazhyn/graphme/main.py)  <sup>Live version doesn't work for crawling new websites because host ip are mostly banned.</sup>
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/karazhyn/graphme/main.py)  <sup>Live version doesn't work for crawling new websites because host ip is mostly banned.</sup>
 
 ## Appearance
 ![screenshot1](screenshots/demo1.png)
